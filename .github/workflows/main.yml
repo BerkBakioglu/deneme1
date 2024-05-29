@@ -1,0 +1,25 @@
+name: Backup Repository
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Add remote repository
+      run: git remote add backup https://github-actions:${{ secrets.BACKUP_REPO_PAT }}@github.com/Berkkkkkkkkk/deneme1.git
+
+    - name: Push to Backup Repository
+      run: git push backup main
